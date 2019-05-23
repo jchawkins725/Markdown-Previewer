@@ -70,12 +70,14 @@ img {
 
   #editor {
     width: 100%;
+    box-sizing: border-box;
     height: 50vh;
     overflow: visible;
   }
 
   #preview {
     width: 100%;
+    box-sizing: border-box;
     overflow: visible;
     height: 100%;
   }
