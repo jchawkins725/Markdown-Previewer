@@ -28,16 +28,21 @@
             return `<a target="_blank" href="${href}">${text}` + '</a>';
         }
 
-        function Header(props) {
-            return (
-                <div className="mainheader">
-                    <i id="bold-icon" className="fas fa-bold" onClick={props.bold}></i>
-                    <i id="italic-icon" className="fas fa-italic" onClick={props.italic}></i>
-                    <i id="list-icon" className="fas fa-list" onClick={props.list}></i>
-                    <span className="headertitle">Markdown Previewer</span>
-                </div>
-            )
+        class Header extends React.Component {
+            render() {
+                return (
+                    <div className="mainheader">
+                        <i className="fas fa-bold" onClick={this.props.bold}></i>
+                        <i className="fas fa-italic" onClick={this.props.italic}></i>
+                        <i className="fas fa-list" onClick={this.props.list}></i>
+                        <i class="fas fa-link" onClick={this.props.link}></i>
+                        <i class="fas fa-images" onClick={this.props.image}></i>
+                        <span className="headertitle">Markdown Previewer</span>
+                    </div>
+                );
+            }
         }
+
         function Editor(props) {
             return (
                 <textarea value={props.value} id="editor" onChange={props.handleChange}>
@@ -62,6 +67,8 @@
                 this.handleBold = this.handleBold.bind(this);
                 this.handleItalic = this.handleItalic.bind(this);
                 this.handleList = this.handleList.bind(this);
+                this.handleLink = this.handleLink.bind(this);
+                this.handleImage = this.handleImage.bind(this);
             }
             handleChange(e) {
                 this.setState({ value: e.target.value });
@@ -105,10 +112,27 @@
                     this.setState({ value: value.slice(0, start) + text + value.slice(start,end) + value.slice(end)});
                 }
             }
+            handleLink() {
+                const value = this.state.value;
+                const textbox = document.getElementById("editor");
+                const start = textbox.selectionStart;
+                const end = textbox.selectionEnd;
+                const text = "[link](add-your-own-url) ";
+                this.setState({ value: value.slice(0, start) + text + value.slice(start,end) + value.slice(end)});
+            }
+            handleImage() {
+                const value = this.state.value;
+                const textbox = document.getElementById("editor");
+                const start = textbox.selectionStart;
+                const end = textbox.selectionEnd;
+                const text = "![add-your-own-img-title](add-your-own-img-url)";
+                this.setState({ value: value.slice(0, start) + text + value.slice(start,end) + value.slice(end)});
+            }
+
             render() {
                 return (
                     <div>
-                        <Header bold={this.handleBold} italic={this.handleItalic} list={this.handleList} value={this.state.value}/>
+                        <Header bold={this.handleBold} italic={this.handleItalic} list={this.handleList} link={this.handleLink} image={this.handleImage} value={this.state.value}/>
                         <div className="flex">
                             <Editor value={this.state.value} handleChange={this.handleChange} />
                             <Preview value={this.state.value} />
