@@ -28,6 +28,16 @@
             return `<a target="_blank" href="${href}">${text}` + '</a>';
         }
 
+        function Header(props) {
+            return (
+                <div className="mainheader">
+                    <i id="bold-icon" className="fas fa-bold" onClick={props.bold}></i>
+                    <i id="italic-icon" className="fas fa-italic" onClick={props.italic}></i>
+                    <i id="list-icon" className="fas fa-list" onClick={props.list}></i>
+                    <span className="headertitle">Markdown Previewer</span>
+                </div>
+            )
+        }
         function Editor(props) {
             return (
                 <textarea value={props.value} id="editor" onChange={props.handleChange}>
@@ -41,6 +51,7 @@
                 </div>
             )
         }
+
         class App extends React.Component {
             constructor(props) {
                 super(props);
@@ -48,14 +59,56 @@
                     value: defaultText
                 };
                 this.handleChange = this.handleChange.bind(this);
+                this.handleBold = this.handleBold.bind(this);
+                this.handleItalic = this.handleItalic.bind(this);
+                this.handleList = this.handleList.bind(this);
             }
             handleChange(e) {
                 this.setState({ value: e.target.value });
             }
+            handleBold() {
+                const value = this.state.value;
+                const textbox = document.getElementById("editor");
+                const start = textbox.selectionStart;
+                const end = textbox.selectionEnd;
+                const text = "**";
+                if (start === end) {
+                    this.setState({ value: value.slice(0, start) + text + "bold" + text + value.slice(end)});
+                }
+                else {
+                    this.setState({ value: value.slice(0, start) + text + value.slice(start,end) + text + value.slice(end)});
+                }
+            }
+            handleItalic() {
+                const value = this.state.value;
+                const textbox = document.getElementById("editor");
+                const start = textbox.selectionStart;
+                const end = textbox.selectionEnd;
+                const text = "*";
+                if (start === end) {
+                    this.setState({ value: value.slice(0, start) + text + "italic" + text + value.slice(end)});
+                }
+                else {
+                    this.setState({ value: value.slice(0, start) + text + value.slice(start,end) + text + value.slice(end)});
+                }
+            }
+            handleList() {
+                const value = this.state.value;
+                const textbox = document.getElementById("editor");
+                const start = textbox.selectionStart;
+                const end = textbox.selectionEnd;
+                const text = "\n- ";
+                if (start === end) {
+                    this.setState({ value: value.slice(0, start) + text + "list" + value.slice(end)});
+                }
+                else {
+                    this.setState({ value: value.slice(0, start) + text + value.slice(start,end) + value.slice(end)});
+                }
+            }
             render() {
                 return (
                     <div>
-                        <p className="mainheader">Markdown Previewer</p>
+                        <Header bold={this.handleBold} italic={this.handleItalic} list={this.handleList} value={this.state.value}/>
                         <div className="flex">
                             <Editor value={this.state.value} handleChange={this.handleChange} />
                             <Preview value={this.state.value} />
@@ -67,8 +120,8 @@
 
         const defaultText =
             `# This is how you type a header
-## add a hashtag for a subheader
-### keep adding hashtags for additional heading sizes
+## Add a hashtag for a subheader
+### Keep adding hashtags for additional heading sizes
 
 ### Want to add a link?
 Here is a [link](https://www.wikipedia.org/) to wikipedia

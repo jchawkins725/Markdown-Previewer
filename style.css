@@ -1,15 +1,29 @@
-* {
+body {
+  font-family: "Roboto", sans-serif;
   margin: 0px;
   padding: 0px;
-  font-family: "Roboto", sans-serif;
 }
 
 .mainheader {
-  text-align: center;
+  padding-left: 20px;
   height: 7vh;
   line-height: 7vh;
   background-color: #2F2F2F;
   color: white;
+  font-size: 14px;
+}
+
+.headertitle {
+  float: right;
+  padding-right: 10px;
+}
+
+i {
+  padding-right: 20px;
+  cursor: pointer;
+}
+i:hover {
+  color: yellow;
 }
 
 .flex {
@@ -22,6 +36,7 @@
   overflow: scroll;
   border: none;
   padding: 3vh 15px;
+  font-size: 15px;
 }
 
 #preview {
@@ -35,6 +50,7 @@
 code {
   background-color: white;
   font-size: 14px;
+  padding: 2px;
 }
 
 pre {
