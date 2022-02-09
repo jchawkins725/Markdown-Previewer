@@ -35,8 +35,8 @@
                         <i className="fas fa-bold" onClick={this.props.bold}></i>
                         <i className="fas fa-italic" onClick={this.props.italic}></i>
                         <i className="fas fa-list" onClick={this.props.list}></i>
-                        <i class="fas fa-link" onClick={this.props.link}></i>
-                        <i class="fas fa-images" onClick={this.props.image}></i>
+                        <i className="fas fa-link" onClick={this.props.link}></i>
+                        <i className="fas fa-images" onClick={this.props.image}></i>
                         <span className="headertitle">Markdown Previewer</span>
                     </div>
                 );
@@ -52,7 +52,7 @@
 
         function Preview(props) {
             return (
-                <div id="preview" dangerouslySetInnerHTML={{ __html: marked(props.value, { renderer: renderer }) }}>
+                <div id="preview" dangerouslySetInnerHTML={{ __html: marked.parse(props.value, { renderer: renderer }) }}>
                 </div>
             )
         }
